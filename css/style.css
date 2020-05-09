@@ -1,9 +1,4 @@
- body {
-    /* Box-model */
-    margin: 0;
-    padding: 0;
-    background-color: #d9dcd6;
-}
+/* GENERAL STYLES */
 
 * {
     box-sizing: border-box;
@@ -11,11 +6,13 @@
     /* margin: 0; */
 }
 
-/* Positioning */
+body {
     margin: 0;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    padding: 0;
+    background-color: #d9dcd6;
+}
 
-    /* HEADER */
+/* HEADER */
 
 header {
     padding: 20px;
@@ -24,20 +21,19 @@ header {
     color: #ffffff;
 }
 
-h1 {
-    display: block;
-    font-size: 2em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
+btn-group border {
+    width: max-content;
+
 }
-.button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 20px;
+
+.btn-group button {
+    display: block;
+    background-color: #4CAF50; /* Green background */
+    border: 3px solid powderblue; /* Green border */
+    color: white; /* White text */
+    padding: 20px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    grid-auto-flow: column; /* Float the buttons side by side */
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -45,12 +41,34 @@ h1 {
     margin: 4px 2px;
 }
 
-.button1 {border-radius: 8px;}
-.button2 {border-radius: 50%;}
+  
+  
+  
+  /* Clear floats (clearfix hack) */
+  .btn-group:after {
+    content: "";
+    clear: both;
+  }
+  
+  /* Add a background color on hover */
+  .btn-group button:hover {
+    background-color: pink;
+  }
 
+.button1, button2, button3 {border-radius: 8px;}
+.button4 {border-radius: 50%;}
+ 
+
+ 
+ 
 #map {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
 }
+
+
+
+
+
