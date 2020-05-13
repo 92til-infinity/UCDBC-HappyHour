@@ -1,7 +1,7 @@
 var userInput;
 var userLongitude;
 var userLatitude;
-var responseADDRESS = [];
+
 
 $("#searchButton").on("click", function () {
     event.preventDefault();
@@ -17,6 +17,7 @@ $("#searchButton").on("click", function () {
 });
 
 function getBeerList() {
+
     //get 5 day forecast
     var zomatoURL = "https://developers.zomato.com/api/v2.1/search?q=" + userInput + "&count=5&lat=" + userLatitude + "&lon=" + userLongitude;
     // console.log(zomatoURL);
@@ -28,27 +29,32 @@ function getBeerList() {
     })
         .then(function (response) {
             // ________________________
-
+            var responseADDRESS = [];
             // ________________________
             //add container div for forecast cards
-            var newLIST = $("<ul>").attr("class", "list-group");
+            let newLIST = $("<ul>").addClass("list-group");
             $("#listgroup").append(newLIST);
             console.log(response);
 
             //loop through array response to find the names and addresses of each restauarant for 15:00
-            for (var i = 0; i < response.restaurants.length; i++) {
+            for (let i = 0; i < response.restaurants.length; i++) {
                 console.log(response.restaurants[i].restaurant.name);
-                var restNAME = response.restaurants[i].restaurant.name;
-                var restADDRESS = response.restaurants[i].restaurant.location.address;
-                var restCITY = response.restaurants[i].restaurant.location.city;
-                var restPRICE = response.restaurants[i].restaurant.price_range;
+                const restNAME = response.restaurants[i].restaurant.name;
+                const restADDRESS = response.restaurants[i].restaurant.location.address;
+                const restCITY = response.restaurants[i].restaurant.location.city;
+                const restPRICE = response.restaurants[i].restaurant.price_range;
                 // in 1 - 5 scale symbols
-                var restREVIEW = response.restaurants[i].restaurant.user_rating.aggregate_rating;
+                const restREVIEW = response.restaurants[i].restaurant.user_rating.aggregate_rating;
                 // in user review integer
-                var responseLATLON = [response.restaurants[i].restaurant.location.latitude, response.restaurants[i].restaurant.location.longitude];
+                const responseLATLON = {
+                    latitude: response.restaurants[i].restaurant.location.latitude,
+                    longitude: response.restaurants[i].restaurant.location.longitude,
+                    name: response.restaurants[i].restaurant.name
+                };
+
                 responseADDRESS.push(responseLATLON);
 
-                var listBodyText = $("<li>").attr("class", "list-group-item list-group-item-action");
+                const listBodyText = $("<li>").addClass("list-group-item list-group-item-action");
                 newLIST.append(listBodyText);
 
                 listBodyText.append($("<p>").attr("class", "list-text").html("name: " + restNAME + "."));
@@ -57,15 +63,10 @@ function getBeerList() {
                 listBodyText.append($("<p>").attr("class", "list-text").html("price rating: " + restPRICE + "/5."));
                 listBodyText.append($("<p>").attr("class", "list-text").html("average user review: " + restREVIEW + "."));
 
-
-
             }
-            addPointsToMap(responseADDRESS);
-
+            mapMarkers(responseADDRESS);
         });
 }
-
-
 
 // ________________________
 
@@ -76,34 +77,32 @@ function clear() {
 
 // ____________________
 
-function addPointsToMap(responseADDRESS) {
-    for (var i = 0; i < responseADDRESS.length; i++) {
-        var mapPoints = responseADDRESS[i];
-        console.log(mapPoints[0], mapPoints[1]);
-    }
-}
+// function addPointsToMap(responseADDRESS) {
+//     for (var i = 0; i < responseADDRESS.length; i++) {
+//         var mapPoints = responseADDRESS[i];
+//         console.log(mapPoints[0], mapPoints[1]);
+//     }
+// }
 
 
 // ________________________ // ________________________
-var geoURL = "https://api.ipgeolocation.io/ipgeo?apiKey=9b336091095743018515a967edc697aa&fields=geo"
-$.ajax({
-    url: geoURL,
-    method: "GET"
+// var geoURL = "https://api.ipgeolocation.io/ipgeo?apiKey=9b336091095743018515a967edc697aa&fields=geo"
+// $.ajax({
+//     url: geoURL,
+//     method: "GET"
 
-})
-    .then(function (response) {
-        console.log(response);
-        console.log(response.latitude);
-        console.log(response.longitude);
-        userLongitude = response.longitude;
-        userLatitude = response.latitude;
-    });
+// })
+//     .then(function (response) {
+//         console.log(response);
+//         console.log(response.latitude);
+//         console.log(response.longitude);
+//         userLongitude = response.longitude;
+//         userLatitude = response.latitude;
+//     });
 // ________________________ // ________________________ // ________________________
 
-
-
-getBeerList();
-console.log(responseADDRESS);
+//getBeerList();
+//console.log(responseADDRESS);
 
 
 // MAPBOX JS
@@ -140,28 +139,16 @@ geolocate.on("geolocate", function (position) {
     marker.setLngLat(coords).addTo(map);
 })
 
+// Create map markers for the five returned searches
+function mapMarkers(restArray) {
 
-let option1 = new mapboxgl.Marker()
-    .setLngLat([-121.492070, 38.562010])
-    .setPopup(new mapboxgl.Popup().setHTML("<h1>Tower Cafe</h1>"))
-    .addTo(map);
-let option2 = new mapboxgl.Marker()
-    .setLngLat([-121.475563, 38.556201])
-    .setPopup(new mapboxgl.Popup().setHTML("<h1>Brewing Company Place</h1>"))
-    .addTo(map);
-let option3 = new mapboxgl.Marker()
-    .setLngLat([-121.465655, 38.564541])
-    .setPopup(new mapboxgl.Popup().setHTML("<h1>The Hideaway</h1>"))
-    .addTo(map);
-let option4 = new mapboxgl.Marker()
-    .setLngLat([-121.442757, 38.560544])
-    .setPopup(new mapboxgl.Popup().setHTML("<h1>The Shack</h1>"))
-    .addTo(map);
-let option5 = new mapboxgl.Marker()
-    .setLngLat([-121.425975, 38.555080])
-    .setPopup(new mapboxgl.Popup().setHTML("<h1>Dos Coyotes</h1>"))
-    .addTo(map);
-
+    for (i = 0; i < restArray.length; i++) {
+        let newMark = new mapboxgl.Marker()
+            .setLngLat([restArray[i].longitude, restArray[i].latitude])
+            .setPopup(new mapboxgl.Popup().setHTML("<h1>" + restArray[i].name + "</h1>"))
+            .addTo(map);
+    }
+}
 
 map.on('load', function () {
 
