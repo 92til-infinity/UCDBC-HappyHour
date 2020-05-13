@@ -9,6 +9,8 @@ $.ajax({
     .then(function (response) {
 
         console.log(response);
+        console.log(response.longitude);
+        console.log(response.latitude);
 
         const longitude = response.longitude;
         const latitude = response.latitude;
