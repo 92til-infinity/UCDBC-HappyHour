@@ -1,13 +1,72 @@
- body {
-    margin: 0;
+/* GENERAL STYLES */
+
+* {
+    box-sizing: border-box;
     padding: 0;
+    /* margin: 0; */
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #d9dcd6;
+}
+
+/* HEADER */
+
+header {
+    padding: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #2a607c;
+    color: #ffffff;
+}
+
+btn-group border {
+    width: max-content;
+
+}
+
+.btn-group button {
+    display: block;
+    background-color: #4CAF50; /* Green background */
+    border: 3px solid powderblue; /* Green border */
+    color: white; /* White text */
+    padding: 20px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    grid-auto-flow: column; /* Float the buttons side by side */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+}
+
+  
+  
+  
+  /* Clear floats (clearfix hack) */
+  .btn-group:after {
+    content: "";
+    clear: both;
+  }
+  
+  /* Add a background color on hover */
+  .btn-group button:hover {
+    background-color: pink;
+  }
+
+.button1, button2, button3 {border-radius: 8px;}
+.button4 {border-radius: 50%;}
+ 
+
+ 
+ 
 #map {
     position: relative;
     top: 0;
     bottom: 0;
     width: 100%;
+<<<<<<< HEAD
     float: right;
 }
 
@@ -16,3 +75,11 @@
     column-width: auto;
 
 }
+=======
+}
+
+
+
+
+
+>>>>>>> 65aea61aaf94ea97f444e33db2b2baa52f9b1731
