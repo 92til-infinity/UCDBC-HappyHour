@@ -3,24 +3,24 @@
 * {
     box-sizing: border-box;
     padding: 0;
-    /* margin: 0; */
+    margin: 0;
 }
 
-body {
+/* body {
     margin: 0;
     padding: 0;
     background-color: #d9dcd6;
-}
+} */
 
 /* HEADER */
 
-header {
+/* header {
     padding: 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #2a607c;
     color: #ffffff;
-}
-
+} */
+/* 
 btn-group border {
     width: max-content;
 
@@ -29,54 +29,98 @@ btn-group border {
 .btn-group button {
     display: block;
     background-color: #4CAF50; /* Green background */
-    border: 3px solid powderblue; /* Green border */
-    color: white; /* White text */
-    padding: 20px; /* Some padding */
-    cursor: pointer; /* Pointer/hand icon */
-    grid-auto-flow: column; /* Float the buttons side by side */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-}
+    /* border: 3px solid powderblue; Green border */
+    /* color: white; White text */
+    /* padding: 20px; Some padding */
+    /* cursor: pointer; Pointer/hand icon */
+    /* grid-auto-flow: column; Float the buttons side by side */
+    /* text-align: center; */
+    /* text-decoration: none; */
+    /* display: inline-block; */
+    /* font-size: 16px; */
+    /* margin: 4px 2px; */
+/* } */
 
   
   
   
   /* Clear floats (clearfix hack) */
-  .btn-group:after {
+  /* .btn-group:after {
     content: "";
     clear: both;
-  }
+  } */
   
   /* Add a background color on hover */
-  .btn-group button:hover {
+  /* .btn-group button:hover {
     background-color: pink;
-  }
+  } */
 
-.button1, button2, button3 {border-radius: 8px;}
-.button4 {border-radius: 50%;}
- 
+/* .button1, button2, button3 {border-radius: 8px;}
+.button4 {border-radius: 50%;} */
+  */
 
- 
+.buttonList {
+    margin-top: 20px;
+}
+
+.beerButton {
+    display: inline;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.buttonDesign {
+    width: 60px;
+}
+
+#mapbox {
+    text-align: center;
+    background-color: darkslategrey;
+}
  
 #map {
     position: relative;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    float: right;
+    margin: auto;
+    width: 90%;
+    height: 350px;
+    margin-bottom: 20px;
 }
 
 #listgroup {
     float: left;
     column-width: auto;
-
-}
 }
 
+#locale-buttons {
+    float: right;
+}
 
+header {
+    text-align: center;
+    background-color: darkslategrey;
+    color: whitesmoke;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
 
+body {
+    background-color: darkslategrey;
+}
+
+.container {
+    background-color: darkslategrey;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.goButton {
+    float: right;
+}
+
+.list-text {
+    width: 100%;
+}
 
 

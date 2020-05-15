@@ -1,25 +1,30 @@
-var userInput;
+// var userInput;
+
 var userLongitude;
 var userLatitude;
 
 
-$("#searchButton").on("click", function () {
+$(".buttonDesign").on("click", function () {
     event.preventDefault();
-    userInput = $("#searchInput").val().trim();
+    const request = $(this).attr("id");
+    $("#locale-buttons").html("");
+    console.log(request);
+
+    // userInput = $("#searchInput").val().trim();
     // console.log(userInput);
-    if (userInput !== "") {
+    if (request !== "") {
         //clear the previous search
         clear();
         //clear the search field value
         $("#searchinput").val("");
     }
-    getBeerList(userInput);
+    getBeerList(request);
 });
 
-function getBeerList() {
+function getBeerList(request) {
 
     //get 5 day forecast
-    var zomatoURL = "https://developers.zomato.com/api/v2.1/search?q=" + userInput + "&count=5&lat=" + userLatitude + "&lon=" + userLongitude;
+    var zomatoURL = "https://developers.zomato.com/api/v2.1/search?q=" + request + "&count=5&lat=" + userLatitude + "&lon=" + userLongitude;
     // console.log(zomatoURL);
     $.ajax({
         url: zomatoURL,
@@ -32,8 +37,8 @@ function getBeerList() {
             var responseADDRESS = [];
             // ________________________
             //add container div for forecast cards
-            let newLIST = $("<ul>").addClass("list-group");
-            $("#listgroup").append(newLIST);
+            // let newLIST = $("<ul>").addClass("list-group");
+            // $("#locale-buttons").append(newLIST);
             console.log(response);
 
             //loop through array response to find the names and addresses of each restauarant for 15:00
@@ -54,16 +59,20 @@ function getBeerList() {
 
                 responseADDRESS.push(responseLATLON);
 
-                const listBodyText = $("<li>").addClass("list-group-item list-group-item-action");
-                newLIST.append(listBodyText);
+                const listBodyText = $("<button>").addClass("list-group-item list-group-item-action list-text")
+                    .text(restNAME);
+                const goButton = $("<button>").addClass("goButton").attr("id", i).text("GO");
+                $(listBodyText).append(goButton);
+                $("#locale-buttons").append(listBodyText);
 
-                listBodyText.append($("<p>").attr("class", "list-text").html("name: " + restNAME + "."));
-                listBodyText.append($("<p>").attr("class", "list-text").html("address: " + restADDRESS + "."));
-                listBodyText.append($("<p>").attr("class", "list-text").html("city: " + restCITY + "."));
-                listBodyText.append($("<p>").attr("class", "list-text").html("price rating: " + restPRICE + "/5."));
-                listBodyText.append($("<p>").attr("class", "list-text").html("average user review: " + restREVIEW + "."));
+                //listBodyText.append($("<p>").addClass("list-text").text(restNAME);
+                // listBodyText.append($("<p>").attr("class", "list-text").html("address: " + restADDRESS + "."));
+                // listBodyText.append($("<p>").attr("class", "list-text").html("city: " + restCITY + "."));
+                listBodyText.append($("<p>").attr("class", "list-text").html("Price: " + restPRICE + "/5"));
+                listBodyText.append($("<p>").attr("class", "list-text").html("Avg Review: " + restREVIEW));
 
             }
+            localStorage.setItem("responseADDRESS", JSON.stringify(responseADDRESS));
             mapMarkers(responseADDRESS);
         });
 }
@@ -104,9 +113,6 @@ function clear() {
 //getBeerList();
 //console.log(responseADDRESS);
 
-
-// MAPBOX JS
-
 mapboxgl.accessToken = "pk.eyJ1IjoicmFza29nIiwiYSI6ImNrOXhvOTdleTA1bHozbXBtc3R0ZDVkODIifQ.706vwlV4IYaDY7ZTOLEt9w";
 
 let end = [userLongitude, userLatitude];
@@ -141,11 +147,10 @@ geolocate.on("geolocate", function (position) {
 
 // Create map markers for the five returned searches
 function mapMarkers(restArray) {
-
     for (i = 0; i < restArray.length; i++) {
         let newMark = new mapboxgl.Marker()
             .setLngLat([restArray[i].longitude, restArray[i].latitude])
-            .setPopup(new mapboxgl.Popup().setHTML("<h1>" + restArray[i].name + "</h1>"))
+            .setPopup(new mapboxgl.Popup().setHTML("<h6>" + restArray[i].name + "</h6>"))
             .addTo(map);
     }
 }
@@ -177,15 +182,20 @@ map.on('load', function () {
     });
 })
 
-let canvas = map.getCanvasContainer();
+//let canvas = map.getCanvasContainer();
 
-$("#clickMe").on("click", function () {
+$("body").on("click", ".goButton", function () {
 
+    event.stopPropagation();
+
+    const responseADDRESS = JSON.parse(localStorage.getItem("responseADDRESS"));
+    const getIndex = $(this).attr("id");
+    const endLon = responseADDRESS[getIndex].longitude;
+    const endLat = responseADDRESS[getIndex].latitude;
     const start = marker.getLngLat();
-    console.log(start);
 
     let targetURL = "https://api.mapbox.com/directions/v5/mapbox/cycling/" + start.lng + ","
-        + start.lat + ";" + end[0] + "," + end[1] + "?steps=true&geometries=geojson&access_token="
+        + start.lat + ";" + endLon + "," + endLat + "?steps=true&geometries=geojson&access_token="
         + mapboxgl.accessToken;
 
     var req = new XMLHttpRequest();
