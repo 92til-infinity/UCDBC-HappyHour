@@ -2,22 +2,14 @@
 
 var userLongitude;
 var userLatitude;
-
-
+var currentMarkers = [];
+$(".instructionList").hide();
 $(".buttonDesign").on("click", function () {
     event.preventDefault();
     const request = $(this).attr("id");
     $("#locale-buttons").html("");
     console.log(request);
 
-    // userInput = $("#searchInput").val().trim();
-    // console.log(userInput);
-    if (request !== "") {
-        //clear the previous search
-        clear();
-        //clear the search field value
-        $("#searchinput").val("");
-    }
     getBeerList(request);
 });
 
@@ -45,8 +37,8 @@ function getBeerList(request) {
             for (let i = 0; i < response.restaurants.length; i++) {
                 console.log(response.restaurants[i].restaurant.name);
                 const restNAME = response.restaurants[i].restaurant.name;
-                const restADDRESS = response.restaurants[i].restaurant.location.address;
-                const restCITY = response.restaurants[i].restaurant.location.city;
+                // const restADDRESS = response.restaurants[i].restaurant.location.address;
+                // const restCITY = response.restaurants[i].restaurant.location.city;
                 const restPRICE = response.restaurants[i].restaurant.price_range;
                 // in 1 - 5 scale symbols
                 const restREVIEW = response.restaurants[i].restaurant.user_rating.aggregate_rating;
@@ -59,7 +51,7 @@ function getBeerList(request) {
 
                 responseADDRESS.push(responseLATLON);
 
-                const listBodyText = $("<button>").addClass("list-group-item list-group-item-action list-text")
+                const listBodyText = $("<li>").addClass("list-group-item list-group-item-active list-text")
                     .text(restNAME);
                 const goButton = $("<button>").addClass("goButton").attr("id", i).text("GO");
                 $(listBodyText).append(goButton);
@@ -73,15 +65,20 @@ function getBeerList(request) {
 
             }
             localStorage.setItem("responseADDRESS", JSON.stringify(responseADDRESS));
+            clear();
             mapMarkers(responseADDRESS);
+
         });
 }
 
 // ________________________
 
 function clear() {
-    $("#searchInput").empty();
-    $("#listgroup").empty();
+    if (currentMarkers !== null) {
+        for (var i = currentMarkers.length - 1; i >= 0; i--) {
+            currentMarkers[i].remove();
+        }
+    }
 }
 
 // ____________________
@@ -95,23 +92,20 @@ function clear() {
 
 
 // ________________________ // ________________________
-// var geoURL = "https://api.ipgeolocation.io/ipgeo?apiKey=9b336091095743018515a967edc697aa&fields=geo"
-// $.ajax({
-//     url: geoURL,
-//     method: "GET"
+var geoURL = "https://api.ipgeolocation.io/ipgeo?apiKey=9b336091095743018515a967edc697aa&fields=geo"
+$.ajax({
+    url: geoURL,
+    method: "GET"
 
-// })
-//     .then(function (response) {
-//         console.log(response);
-//         console.log(response.latitude);
-//         console.log(response.longitude);
-//         userLongitude = response.longitude;
-//         userLatitude = response.latitude;
-//     });
+})
+    .then(function (response) {
+
+        userLongitude = response.longitude;
+        userLatitude = response.latitude;
+    });
 // ________________________ // ________________________ // ________________________
 
-//getBeerList();
-//console.log(responseADDRESS);
+
 
 mapboxgl.accessToken = "pk.eyJ1IjoicmFza29nIiwiYSI6ImNrOXhvOTdleTA1bHozbXBtc3R0ZDVkODIifQ.706vwlV4IYaDY7ZTOLEt9w";
 
@@ -147,12 +141,17 @@ geolocate.on("geolocate", function (position) {
 
 // Create map markers for the five returned searches
 function mapMarkers(restArray) {
+
     for (i = 0; i < restArray.length; i++) {
+
         let newMark = new mapboxgl.Marker()
             .setLngLat([restArray[i].longitude, restArray[i].latitude])
             .setPopup(new mapboxgl.Popup().setHTML("<h6>" + restArray[i].name + "</h6>"))
             .addTo(map);
+        currentMarkers.push(newMark);
+
     }
+
 }
 
 map.on('load', function () {
@@ -187,14 +186,15 @@ map.on('load', function () {
 $("body").on("click", ".goButton", function () {
 
     event.stopPropagation();
-
+    $(".list-group-item ").hide();
+    $(".instructionList").show();
     const responseADDRESS = JSON.parse(localStorage.getItem("responseADDRESS"));
     const getIndex = $(this).attr("id");
     const endLon = responseADDRESS[getIndex].longitude;
     const endLat = responseADDRESS[getIndex].latitude;
     const start = marker.getLngLat();
 
-    let targetURL = "https://api.mapbox.com/directions/v5/mapbox/cycling/" + start.lng + ","
+    let targetURL = "https://api.mapbox.com/directions/v5/mapbox/driving/" + start.lng + ","
         + start.lat + ";" + endLon + "," + endLat + "?steps=true&geometries=geojson&access_token="
         + mapboxgl.accessToken;
 
@@ -204,6 +204,7 @@ $("body").on("click", ".goButton", function () {
 
         let json = JSON.parse(req.response);
         let data = json.routes[0];
+
         let route = data.geometry.coordinates;
         let geojson = {
             type: "Feature",
@@ -244,16 +245,20 @@ $("body").on("click", ".goButton", function () {
             });
         }
         // add turn instruction here
-        const instructions = $("#instructions");
+        // const instructions = $("#instructions");
         let steps = data.legs[0].steps;
-
+        console.log(steps);
         let tripInstructions = [];
         for (let i = 0; i < steps.length; i++) {
-            tripInstructions.push("<br><li>" + steps[i].maneuver.instruction) + "</li>";
-            $("#instructions").html("<br><span class='duration'>Trip duration: "
+
+            tripInstructions.push("<br></br>" + "<li>" + steps[i].maneuver.instruction + " ");
+            $(".Trip").html("<br><span class='duration'>Trip duration: "
                 + Math.floor(data.duration / 60) + " min 🚴 </span>" + tripInstructions);
         }
+
+
     };
+
     req.send();
 })
 

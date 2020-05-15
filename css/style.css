@@ -121,6 +121,11 @@ body {
 
 .list-text {
     width: 100%;
+
+}
+
+.duration{
+    font-size: larger;
 }
 
 
