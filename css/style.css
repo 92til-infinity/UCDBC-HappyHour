@@ -67,6 +67,8 @@ btn-group border {
     display: inline;
     text-align: center;
     margin-bottom: 20px;
+    
+    
 }
 
 .buttonDesign {
@@ -121,6 +123,11 @@ body {
 
 .list-text {
     width: 100%;
+
+}
+
+.duration{
+    font-size: larger;
 }
 
 

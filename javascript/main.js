@@ -1,3 +1,4 @@
+
 var currentMarkers = [];
 
 $(".instructionList").hide();
@@ -6,7 +7,7 @@ $(".buttonDesign").on("click", function () {
 
     const request = $(this).attr("id");
     $("#locale-buttons").html("");
-
+  
     getBeerList(request);
 });
 
@@ -18,6 +19,7 @@ function getBeerList(request) {
         method: "GET"
     })
         .then(function (response) {
+
             const userLongitude = response.longitude;
             const userLatitude = response.latitude;
 
@@ -76,6 +78,7 @@ function getBeerList(request) {
 
                 });
         })
+
 }
 
 // ________________________
@@ -87,7 +90,6 @@ function clear() {
         }
     }
 }
-
 
 mapboxgl.accessToken = "pk.eyJ1IjoicmFza29nIiwiYSI6ImNrOXhvOTdleTA1bHozbXBtc3R0ZDVkODIifQ.706vwlV4IYaDY7ZTOLEt9w";
 
@@ -135,7 +137,9 @@ function mapMarkers(restArray) {
 
         $(newMark).addClass("destinations");
         currentMarkers.push(newMark);
+
     }
+
 }
 
 // map.on('load', function () {
@@ -213,7 +217,7 @@ $("body").on("click", ".goButton", function (event) {
         .addTo(map);
     currentMarkers.push(endMark);
 
-    let targetURL = "https://api.mapbox.com/directions/v5/mapbox/cycling/" + start.lng + ","
+    let targetURL = "https://api.mapbox.com/directions/v5/mapbox/driving/" + start.lng + ","
         + start.lat + ";" + endLon + "," + endLat + "?steps=true&geometries=geojson&access_token="
         + mapboxgl.accessToken;
 
@@ -223,6 +227,7 @@ $("body").on("click", ".goButton", function (event) {
         console.log("onload() called")
         let json = JSON.parse(req.response);
         let data = json.routes[0];
+
         let route = data.geometry.coordinates;
         let geojson = {
             type: "Feature",
@@ -264,6 +269,7 @@ $("body").on("click", ".goButton", function (event) {
             map.getSource("route").setData(geojson);
         }
         // add turn instruction here
+
         let steps = data.legs[0].steps;
         let tripInstructions = [];
         for (let i = 0; i < steps.length; i++) {
@@ -272,7 +278,10 @@ $("body").on("click", ".goButton", function (event) {
             $(".Trip").html("<br><span class='duration'>Trip duration: "
                 + Math.floor(data.duration / 60) + " min 🚴 </span>" + tripInstructions);
         }
+
+
     };
+
     req.send();
 })
 
