@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Beer Me Now</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css' rel='stylesheet' />
-    <title>Restaurants</title>
     <link rel="stylesheet" type="text/css" href="./css/reset.css">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -29,47 +28,47 @@
         </div>
     </div>
 
-    <div class="row buttonList">
-        
-            <div class="d-flex justify-content-around col-3 beerButton">
-                <button class="buttonDesign" id="beer">Beer</button>
-            </div>
-            <div class="col-3 beerButton">
-                <button class="buttonDesign" id="sushi">Sushi</button>
-            </div>
-            <div class="col-3 beerButton">
-                <button class="buttonDesign" id="tacos">Tacos</button>
-            </div>
-            <div class="col-3 beerButton">
-                <button class="buttonDesign" id="italian">Italian</button>
-            </div>
+    <div class="d-flex justify-content-around row buttonList">
 
-            <div class="col-3 beerButton">
-                <button class="buttonDesign" id="Wings">Wings</button>
-            </div>
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="beer">Beer</button>
+        </div>
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="sushi">Sushi</button>
+        </div>
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="tacos">Tacos</button>
+        </div>
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="fullbar">Fullbar</button>
+        </div>
 
-            <div class="col-3 beerButton">
-                <button class="buttonDesign" id="fries">Fries</button>
-            </div>
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="wings">Wings</button>
+        </div>
 
-            <div class="col-3 beerButton">
-                <button class="buttonDesign" id="takila">Takila</button>
-            </div>
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="fries">Fries</button>
+        </div>
 
-            <div class="col-3 beerButton">
-                <button class="buttonDesign" id="vodka">Vodka</button>
-            </div>
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="truck">Truck</button>
+        </div>
+
+        <div class="d-flex justify-content-around col-3 beerButton">
+            <button class="buttonDesign" id="takeaway">Takeaway</button>
         </div>
     </div>
 
-    </div>
+
     <div class="row resultList">
         <div class="col-12" id="locale-buttons"></div>
     </div>
     <div class="col-sm-12 instructionList">
-        <div class="routeTime">
+        <div class="d-flex flex-column routeTime">
             <h3>ROUTE:</h3>
-            <p class="Trip"></p>
+            <p class=" p-2 trip"></p>
+            <p class="p-2 tripDir"></p>
         </div>
 
     </div>

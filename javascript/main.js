@@ -1,13 +1,12 @@
-
 var currentMarkers = [];
 
 $(".instructionList").hide();
 $(".buttonDesign").on("click", function () {
     event.preventDefault();
-
+    $(".instructionList").hide();
     const request = $(this).attr("id");
     $("#locale-buttons").html("");
-  
+
     getBeerList(request);
 });
 
@@ -274,9 +273,10 @@ $("body").on("click", ".goButton", function (event) {
         let tripInstructions = [];
         for (let i = 0; i < steps.length; i++) {
 
-            tripInstructions.push("<br></br>" + "<li>" + steps[i].maneuver.instruction + " ");
-            $(".Trip").html("<br><span class='duration'>Trip duration: "
-                + Math.floor(data.duration / 60) + " min 🚴 </span>" + tripInstructions);
+            tripInstructions.push("<li>" + steps[i].maneuver.instruction + " ");
+            $(".trip").html("<br><span class='duration'>Trip duration: "
+                + Math.floor(data.duration / 60) + " min 🚴 </span>");
+            $(".tripDir").html(tripInstructions);
         }
 
 

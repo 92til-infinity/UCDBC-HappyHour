@@ -6,58 +6,6 @@
     margin: 0;
 }
 
-/* body {
-    margin: 0;
-    padding: 0;
-    background-color: #d9dcd6;
-} */
-
-/* HEADER */
-
-/* header {
-    padding: 20px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: #2a607c;
-    color: #ffffff;
-} */
-/* 
-btn-group border {
-    width: max-content;
-
-}
-
-.btn-group button {
-    display: block;
-    background-color: #4CAF50; /* Green background */
-    /* border: 3px solid powderblue; Green border */
-    /* color: white; White text */
-    /* padding: 20px; Some padding */
-    /* cursor: pointer; Pointer/hand icon */
-    /* grid-auto-flow: column; Float the buttons side by side */
-    /* text-align: center; */
-    /* text-decoration: none; */
-    /* display: inline-block; */
-    /* font-size: 16px; */
-    /* margin: 4px 2px; */
-/* } */
-
-  
-  
-  
-  /* Clear floats (clearfix hack) */
-  /* .btn-group:after {
-    content: "";
-    clear: both;
-  } */
-  
-  /* Add a background color on hover */
-  /* .btn-group button:hover {
-    background-color: pink;
-  } */
-
-/* .button1, button2, button3 {border-radius: 8px;}
-.button4 {border-radius: 50%;} */
-  */
 
 .buttonList {
     margin-top: 20px;
@@ -72,7 +20,7 @@ btn-group border {
 }
 
 .buttonDesign {
-    width: 60px;
+    width: 100px;
 }
 
 #mapbox {
@@ -128,6 +76,10 @@ body {
 
 .duration{
     font-size: larger;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
 }
 
-
+.tripDir li:nth-child(2n-1) {  
+    background-color: rgba(202, 199, 199, 0.623);
+  }
