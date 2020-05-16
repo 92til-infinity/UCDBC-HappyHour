@@ -275,7 +275,7 @@ $("body").on("click", ".goButton", function (event) {
 
             tripInstructions.push("<li>" + steps[i].maneuver.instruction + " ");
             $(".trip").html("<br><span class='duration'>Trip duration: "
-                + Math.floor(data.duration / 60) + " min 🚴 </span>");
+                + Math.floor(data.duration / 60) + " min </span>");
             $(".tripDir").html(tripInstructions);
         }
 
